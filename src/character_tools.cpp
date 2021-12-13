@@ -23,11 +23,11 @@ public:
         if (!sConfigMgr->GetBoolDefault("CharacterTools", true))
             return false;
 
-        AddGossipItemFor(p, GOSSIP_ICON_CHAT, "|TInterface/Icons/Ability_Paladin_BeaconofLight:50:50|tChange My Race", GOSSIP_SENDER_MAIN, 1);
-        AddGossipItemFor(p, GOSSIP_ICON_CHAT, "|TInterface/Icons/INV_BannerPVP_01:50:50|tChange My Faction", GOSSIP_SENDER_MAIN, 2);
-        AddGossipItemFor(p, GOSSIP_ICON_CHAT, "|TInterface/Icons/Achievement_BG_returnXflags_def_WSG:50:50|tChange My Appearance", GOSSIP_SENDER_MAIN, 3);
-        AddGossipItemFor(p, GOSSIP_ICON_CHAT, "|TInterface/Icons/INV_Inscription_Scroll:50:50|tChange My Name", GOSSIP_SENDER_MAIN, 4);
-        SendGossipMenuFor(p, DEFAULT_GOSSIP_MESSAGE, i->GetGUID());
+        AddGossipItemFor(p, GOSSIP_ICON_CHAT, "|TInterface/Icons/Ability_Paladin_BeaconofLight:20:20|tChanger de |cffFF8000RACE|r", GOSSIP_SENDER_MAIN, 1);
+        AddGossipItemFor(p, GOSSIP_ICON_CHAT, "|TInterface/Icons/INV_BannerPVP_01:20:20|tChanger de |cffFF3F40FACTION|r", GOSSIP_SENDER_MAIN, 2);
+        AddGossipItemFor(p, GOSSIP_ICON_CHAT, "|TInterface/Icons/Achievement_BG_returnXflags_def_WSG:20:20|tChanger d'|cffA335EEAPPARENCE|r", GOSSIP_SENDER_MAIN, 3);
+        AddGossipItemFor(p, GOSSIP_ICON_CHAT, "|TInterface/Icons/INV_Inscription_Scroll:20:20|tChanger de |cff1EFF0CNOM|r", GOSSIP_SENDER_MAIN, 4);
+        SendGossipMenuFor(p, 60006, i->GetGUID());
 
         return false; // If item has spell cast it normal.
     }
