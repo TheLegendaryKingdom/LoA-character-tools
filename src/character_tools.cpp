@@ -13,21 +13,21 @@ class character_tools : public ItemScript
 public:
     character_tools() : ItemScript("character_tools") {}
 
-    bool OnUse(Player* p, Item* i, SpellCastTargets const& /*targets*/) override
+    bool OnUse(Player* player, Item* item, SpellCastTargets const& /*targets*/) override
     {
-        p->PlayerTalkClass->ClearMenus();
+        player->PlayerTalkClass->ClearMenus();
 
-        if (p->IsInCombat())
+        if (player->IsInCombat())
             return false;
 
         if (!sConfigMgr->GetBoolDefault("CharacterTools", true))
             return false;
 
-        AddGossipItemFor(p, GOSSIP_ICON_CHAT, "|TInterface/Icons/Ability_Paladin_BeaconofLight:20:20|tChanger de |cffFF8000RACE|r", GOSSIP_SENDER_MAIN, 1);
-        AddGossipItemFor(p, GOSSIP_ICON_CHAT, "|TInterface/Icons/INV_BannerPVP_01:20:20|tChanger de |cffFF3F40FACTION|r", GOSSIP_SENDER_MAIN, 2);
-        AddGossipItemFor(p, GOSSIP_ICON_CHAT, "|TInterface/Icons/Achievement_BG_returnXflags_def_WSG:20:20|tChanger d'|cffA335EEAPPARENCE|r", GOSSIP_SENDER_MAIN, 3);
-        AddGossipItemFor(p, GOSSIP_ICON_CHAT, "|TInterface/Icons/INV_Inscription_Scroll:20:20|tChanger de |cff1EFF0CNOM|r", GOSSIP_SENDER_MAIN, 4);
-        SendGossipMenuFor(p, 60006, i->GetGUID());
+        AddGossipItemFor(player, GOSSIP_ICON_TRAINER, "Changer de |cff1EFF0CNOM|r", GOSSIP_SENDER_MAIN, 1, "Voulez-vous vraiment changer de |cff1EFF0CNOM|r ?\n\nCe service est irrévocable !\n", 0, false);
+        AddGossipItemFor(player, GOSSIP_ICON_TABARD, "Changer d'|cffA335EEAPPARENCE|r", GOSSIP_SENDER_MAIN, 2, "Voulez-vous vraiment changer d'|cffA335EEAPPARENCE|r ?\n\nVous pourrez annuler ce service si vous changez d'avis.\n", 0, false);
+        AddGossipItemFor(player, GOSSIP_ICON_TAXI, "Changer de |cffFFFC01RACE|r", GOSSIP_SENDER_MAIN, 3, "Voulez-vous vraiment changer de |cffFFFC01RACE|r ?\n\nVous pourrez annuler ce service si vous changez d'avis.\n", 0, false);
+        AddGossipItemFor(player, GOSSIP_ICON_BATTLE, "Changer de |cffFF8000FACTION|r", GOSSIP_SENDER_MAIN, 4, "Voulez-vous vraiment changer de |cffFF8000FACTION|r ?\n\nVous pourrez annuler ce service si vous changez d'avis.\n", 0, false);
+        SendGossipMenuFor(player, 60006, item->GetGUID());
 
         return false; // If item has spell cast it normal.
     }
@@ -38,20 +38,20 @@ public:
         switch (action)
         {
             case 1:
-                player->SetAtLoginFlag(AT_LOGIN_CHANGE_RACE);
-                ChatHandler(player->GetSession()).PSendSysMessage("CHAT OUTPUT: Please log out for race change.");
+                player->SetAtLoginFlag(AT_LOGIN_RENAME);
+                ChatHandler(player->GetSession()).PSendSysMessage("CHAT OUTPUT: Please log out for name change.");
                 break;
             case 2:
-                player->SetAtLoginFlag(AT_LOGIN_CHANGE_FACTION);
-                ChatHandler(player->GetSession()).PSendSysMessage("CHAT OUTPUT: Please log out for faction change.");
-                break;
-            case 3:
                 player->SetAtLoginFlag(AT_LOGIN_CUSTOMIZE);
                 ChatHandler(player->GetSession()).PSendSysMessage("CHAT OUTPUT: Please log out for Character Customize.");
                 break;
+            case 3:
+                player->SetAtLoginFlag(AT_LOGIN_CHANGE_RACE);
+                ChatHandler(player->GetSession()).PSendSysMessage("CHAT OUTPUT: Please log out for race change.");
+                break;
             case 4:
-                player->SetAtLoginFlag(AT_LOGIN_RENAME);
-                ChatHandler(player->GetSession()).PSendSysMessage("CHAT OUTPUT: Please log out for name change.");
+                player->SetAtLoginFlag(AT_LOGIN_CHANGE_FACTION);
+                ChatHandler(player->GetSession()).PSendSysMessage("CHAT OUTPUT: Please log out for faction change.");
                 break;
         }
     }
